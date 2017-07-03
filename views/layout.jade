@@ -1,0 +1,22 @@
+- var pages = [{'id': 1, 'name':'greka-synyl-ryky-v-reky-123'},{'id': 2, 'name':'ruby'},{'id': 3, 'name':'java'},];
+
+doctype html
+html(lang='ru')
+    head
+        meta(charset='UTF-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='/style.css')
+        title= title
+    body
+        nav
+            ul.nav
+                li
+                    a(href='/') Home
+                each page in pages
+                    li: a(href="/#{page.id}")=page.name
+                li
+                    a(href="/blog") blog
+                    //ul.posts-nav
+        .main-content
+            block content
