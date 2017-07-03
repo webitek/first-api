@@ -1,112 +1,86 @@
-var express = require('express');
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var express = require('express'),
+    app = require('express')(),
+    http = require('http').Server(app),
+    io = require('socket.io')(http),
+    pages = require('./data/pages.json'),
+    posts = require('./data/posts.json'),
+    bodyParser = require('body-parser'),
+    fs = require('fs'),
+    url = require('url'),
+    nav = {
+        pages: pages,
+        posts: posts
+    };
 
-var pages = require('./data/pages.json');
-var posts = require('./data/posts.json');
-
-app.set('views', './views/**/');
-app.set('view engine', 'jade'); //haml handelbars pug
-
-app.use(express.static('public'));
-
-var bodyParser = require('body-parser');
-var fs = require('fs');
-var url = require('url');
-
-app.set('views', './views');
+app.set('views', './views/');
 app.set('view engine', 'jade');
-
-// app.use(express.static('public'));
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));//для работы с POST
 
 app.get('/', function (req, res) {
-    res.render('index', {title: 'API', pages: pages});
+    res.render('index', {
+        title: 'API',
+        nav: nav
+    });
 });
-
 
 app.get('/:page', function (req, res, next) {
 
     var page = req.params.page;
 
     if(page == 'blog'){
-            res.render('blog', {pages: pages});
+        res.render('blog', {
+            nav: nav
+        });
     }else{
         next();
     }
 });
 
-app.get('/blog/:post', function (req, res, next) {
+app.get('/:id', function (req, res, next) {
 
-    //console.log(req.url);
-
-    //var post = req.params.post;
-
-    var post = posts.find(function (post) {
-
-        return post.link === req.params.link;
-    });
-
-
-    if(post === post){
-        console.log('if: ' + post);
-
-
-
-        // var num = posts.find(function (num) {
-        //     console.log(num.id);
-        //     return num.id === req.params.id;
-        // });
-
-        res.render('post', {pages: pages, post: post});
-    }else{
-        next();
-    }
-});
-
-app.get('/:id', function (req, res) {
-
-    var page = pages.find(function (page) {
+    /*var page = pages.find(function (page) {
         return page.id === req.params.id;
     });
     console.log(page.name);
     res.render(page.name, {
         title: page.name,
-        pages: pages,
-        page: page
+        page: page,
+        nav: nav
+    });*/
+
+    var page = req.params.id;
+
+    var result = pages.find(function (element, index) {
+        if(element.name == page){
+            res.render(element.name, {title: element.name, page: element, nav: nav});
+            return element;
+        }
     });
+
+    if(result == undefined) next();
 });
 
-/*
-app.get('/post', function (req, res) {
+app.get('/blog/:post', function (req, res, next) {
 
-    // var blog = posts.find(function (link) {
-    //     return blog.link === req.params.id;
-    // });
-    // console.log(blog.link);
-    res.render('post');
-});*/
+    var post = req.params.post,
+        result = posts.find(function (element, index) {
+            if(element.link == post){
+                res.render('post', {post: element, nav: nav});
+                return element;
+            }
+        });
 
+    if(result == undefined) next()
 
-// error handler
-/*app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error', {title: '404'});
-});*/
-
-
-app.use(function(req, res) {
-    res.status(404).render('error', {title: '404'});
 });
 
 app.use(function(req, res) {
-    res.status(500).render('error', {title: '500'});
+    res.status(404).render('error', {title: '404', nav: nav});
+});
+
+app.use(function(req, res) {
+    res.status(500).render('error', {title: '500', nav: nav});
 });
 
 http.listen(3001, function(){

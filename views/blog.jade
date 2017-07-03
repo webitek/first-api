@@ -1,6 +1,9 @@
 extends layout
+block link
+  -var activePage = 'blog';
 
 block content
   h1="blog page"
-  // + posts.title
-  span
+  ul
+    each post in nav.posts
+      li: a(href="/blog/#{post.link}")=post.title

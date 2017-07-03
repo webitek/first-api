@@ -1,6 +1,11 @@
 //- var pages = [{'id': 1, 'name':'greka-synyl-ryky-v-reky-123'},{'id': 2, 'name':'ruby'},{'id': 3, 'name':'java'},];
 
+-var activePage;
+
+
 doctype html
+block link
+    -var activePage; //default
 html(lang='ru')
     head
         meta(charset='UTF-8')
@@ -11,14 +16,31 @@ html(lang='ru')
     body
         nav
             ul.nav
+                if activePage === 'home'
+                    li.active
+                        a(href='/') Home
+                else
+                    li
+                        a(href='/') Home
+                each page in nav.pages
+                    if activePage === page.name
+                        li(class="active"): a(href="/#{page.name}")=page.name
+                    else
+                        li: a(href="/#{page.name}")=page.name
+
+                if activePage === 'blog'
+                    li.select-nav.active
+                        a(href="/blog") blog
+                        ul.posts-nav
+                            each post in nav.posts
+                                li: a(href="/blog/#{post.link}")=post.title
+                else
+                    li.select-nav
+                        a(href="/blog") blog
+                        ul.posts-nav
+                            each post in nav.posts
+                                li: a(href="/blog/#{post.link}")=post.title
                 li
-                    a(href='/') Home
-                each page in pages
-                    li: a(href="/#{page.id}")=page.name
-                li
-                    a(href="/blog") blog
-                    //ul.posts-nav
-                li
-                    a(href="/blog/post") post
+                    a(href="/sdf") 404
         .main-content
             block content

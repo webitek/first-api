@@ -1,6 +1,13 @@
 extends layout
+block link
+  -var activePage = 'blog';
 
 block content
-  h1="page for blog post" + post.title
-  // + posts.title
-  span
+  h1= post.title
+  span= post.content
+
+
+  br
+  br
+  br
+  a(href="/blog") back to blog

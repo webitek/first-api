@@ -1,14 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style: none;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+    color: #000000;
+}
+a:hover{
+    text-decoration: underline;
+}
 body {
     padding-top: 50px;
+    color: #000000;
 }
 
 .main-content {
     padding: 40px 15px;
 }
 .nav {
-    list-style: none;
     display: flex;
 }
 .nav li {
     margin: 0 20px;
+    white-space: nowrap;
+}
+.nav li.active>a{
+    color: blue;
+}
+
+.select-nav{
+    position: relative;
+}
+.select-nav:hover .posts-nav{
+    display: block;
+}
+.posts-nav{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    min-width: 100%;
+}
+.posts-nav li{
+    margin: 0;
+    padding: 5px 0;
 }
