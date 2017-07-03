@@ -1,14 +1,17 @@
 [
   {
   "id": "1",
-  "name": "greka-synyl-ryky-v-reky-123"
+  "name": "about",
+  "content": "about content"
   },
   {
   "id": "2",
-  "name": "ruby"
+  "name": "contact",
+  "content": "contact content"
   },
   {
   "id": "3",
-  "name": "java"
+  "name": "java",
+  "content": "about content"
   }
 ]

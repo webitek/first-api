@@ -1,4 +1,4 @@
-- var pages = [{'id': 1, 'name':'greka-synyl-ryky-v-reky-123'},{'id': 2, 'name':'ruby'},{'id': 3, 'name':'java'},];
+//- var pages = [{'id': 1, 'name':'greka-synyl-ryky-v-reky-123'},{'id': 2, 'name':'ruby'},{'id': 3, 'name':'java'},];
 
 doctype html
 html(lang='ru')
@@ -16,7 +16,7 @@ html(lang='ru')
                 each page in pages
                     li: a(href="/#{page.id}")=page.name
                 li
-                    a(href="/post") blog
+                    a(href="/blog") blog
                     //ul.posts-nav
         .main-content
             block content
