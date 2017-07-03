@@ -18,21 +18,6 @@ var url = require('url');
 app.set('views', './views');
 app.set('view engine', 'jade');
 
-// var pages = [
-//     {
-//         id: 1,
-//         name: "greka-synyl-ryky-v-reky-123"
-//     },
-//     {
-//         id: 2,
-//         name: "ruby"
-//     },
-//     {
-//         id: 3,
-//         name: "java"
-//     }
-// ];
-
 // app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));//для работы с POST
 
@@ -54,10 +39,27 @@ app.get('/:page', function (req, res, next) {
 
 app.get('/blog/:post', function (req, res, next) {
 
-    var post = req.params.page;
+    //console.log(req.url);
 
-    if(post == 'post'){
-        res.render('post', {pages: pages});
+    //var post = req.params.post;
+
+    var post = posts.find(function (post) {
+
+        return post.link === req.params.link;
+    });
+
+
+    if(post === post){
+        console.log('if: ' + post);
+
+
+
+        // var num = posts.find(function (num) {
+        //     console.log(num.id);
+        //     return num.id === req.params.id;
+        // });
+
+        res.render('post', {pages: pages, post: post});
     }else{
         next();
     }
