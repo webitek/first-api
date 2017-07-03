@@ -45,13 +45,20 @@ app.get('/:page', function (req, res, next) {
 
     var page = req.params.page;
 
-    if(page == 'blog/post'){
-            res.render('post', {pages: pages});
+    if(page == 'blog'){
+            res.render('blog', {pages: pages});
+    }else{
+        next();
     }
-    else if(page == 'blog') {
-        res.render('blog', {pages: pages});
-    }
-    else{
+});
+
+app.get('/blog/:post', function (req, res, next) {
+
+    var post = req.params.page;
+
+    if(post == 'post'){
+        res.render('post', {pages: pages});
+    }else{
         next();
     }
 });
