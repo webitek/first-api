@@ -49,13 +49,13 @@ app.get('/:id', function (req, res) {
     res.render(page.name, {title: page.name, pages: pages})
 });
 
-app.get('/blog', function (req, res) {
+app.get('/post', function (req, res) {
 
     // var blog = posts.find(function (link) {
     //     return blog.link === req.params.id;
     // });
     // console.log(blog.link);
-    res.render('/blog/post')
+    res.render('/post'); 
 });
 
 

@@ -43,6 +43,3 @@ databases
 
 # komodo project
 *.komodoproject
-.gitignore
-.idea/workspace.xml
-node_modules/
